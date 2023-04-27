@@ -1,0 +1,5 @@
+__pycache__/
+config/__pycache__/
+elekenGK/__pycache__/
+elekenGK/migrations/__pycache__/
+db.sqlite3
