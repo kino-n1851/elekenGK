@@ -9,7 +9,7 @@ load_dotenv()
 app_url = os.environ["APP_URL"]
 
 intents = discord.Intents.all()
-TOKEN = "tekitotoken"
+TOKEN = os.environ["BOT_TOKEN"]
 client = discord.Client(intents=intents)
 task = None
 

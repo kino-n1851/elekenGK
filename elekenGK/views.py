@@ -21,11 +21,13 @@ class AccessView(APIView):
         if not target_user:
             temp_users = [user for user in UserData.objects.all() if user.is_temporary]
             if not temp_users:
+                print("there are no temp users")
                 return Response()
             
             if len(temp_users) > 1:
                 for temp_user in temp_users:
                     temp_user.delete()
+                print("[NFC]登録待ちリスト不正")
                 errorMessage = "不正な形式の登録待ちリストが検出されました。\n受付リストを削除しました。"
                 message = Message.objects.all()[0]
                 message.content = errorMessage
@@ -36,6 +38,7 @@ class AccessView(APIView):
             
             datetime_now = datetime.datetime.now(datetime.timezone.utc)
             if datetime_now > temp_users[0].register_expiration_date:
+                print("[NFC]受付時間切れ")
                 errorMessage = "NFC受付時間切れです。\n再度登録手続きをお願いします。"
                 message = Message.objects.all()[0]
                 message.content = errorMessage
@@ -119,7 +122,7 @@ class DiscordMessageView(APIView):
     
     def post(self, request, format=None):
         params = request.data
-        message = Message.objects.all()[0]
+        message = Message.objects.all()[0]#err
         if params.get("message_id", "") and params.get("channel_id", ""):
             message.message_id = params.get("message_id", "")
             message.channel_id = params.get("channel_id", "")

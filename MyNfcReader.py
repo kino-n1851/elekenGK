@@ -32,6 +32,7 @@ class TestNFCReader(NFCReader):
         print(f"iDm detected: {idm}")
         try:
             response = requests.post(f"{app_url}/touch", data={"nfc_iDm":str(idm)})
+            print(response.content)
             if response.status_code != 200:
                 print(f"[nfcReader]:connection with server doesn't success.\n {response.status_code=}") 
         except HTTPError as e:
